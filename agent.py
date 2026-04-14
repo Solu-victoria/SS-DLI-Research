@@ -23,8 +23,8 @@ class Agent:
     def __init__(self, state_dim, action_dim):
         self.model = DQN(state_dim, action_dim)
         self.optimizer = optim.Adam(self.model.parameters(), lr=1e-3)
-        self.memory = []
 
+        self.memory = []
         self.gamma = 0.99
         self.epsilon = 1.0
 
@@ -46,7 +46,6 @@ class Agent:
             return
 
         batch = random.sample(self.memory, batch_size)
-
         states, actions, rewards, next_states = zip(*batch)
 
         states = torch.FloatTensor(states)
@@ -58,7 +57,6 @@ class Agent:
         next_q_values = self.model(next_states)
 
         target = rewards + self.gamma * torch.max(next_q_values, dim=1)[0]
-
         current = q_values.gather(1, actions.unsqueeze(1)).squeeze()
 
         loss = nn.MSELoss()(current, target.detach())
