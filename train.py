@@ -34,7 +34,7 @@ def train_model(multi_timescale=False, episodes=200, save_path=None):
 
     return rewards_history
 
-def run_experiment(num_runs=5, episodes=200):
+def run_train_experiment(num_runs=5, episodes=200):
     all_baseline = []
     all_multi = []
 
