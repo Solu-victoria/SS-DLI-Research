@@ -5,12 +5,12 @@ import numpy as np
 def train_model(multi_timescale=False, episodes=200, save_path=None):
     env = StudentEnv(multi_timescale=multi_timescale)
 
-    state_dim = 6 if multi_timescale else 4
+    state_dim = 4 if multi_timescale else 2
     agent = Agent(state_dim=state_dim, action_dim=4)
 
     rewards_history = []
 
-    for ep in range(episodes):
+    for ep in range(episodes+1):
         state = env.reset()
         total_reward = 0
 
@@ -42,8 +42,8 @@ def run_train_experiment(num_runs=5, episodes=200):
         print(f"\nRun {run+1}/{num_runs}")
 
         # Create filenames
-        baseline_path = f"models/baseline/run_{run+1}.pth"
-        multi_path = f"models/multi/run_{run+1}.pth"
+        baseline_path = f"models/v2/baseline/run_{run+1}.pth"
+        multi_path = f"models/v2/multi/run_{run+1}.pth"
 
         # Train + save
         baseline = train_model(
