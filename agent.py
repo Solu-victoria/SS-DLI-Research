@@ -66,3 +66,10 @@ class Agent:
         self.optimizer.step()
 
         self.epsilon = max(0.1, self.epsilon * 0.995)
+
+    def save(self, path):
+        torch.save(self.model.state_dict(), path)
+
+    def load(self, path):
+        self.model.load_state_dict(torch.load(path))
+        self.model.eval()

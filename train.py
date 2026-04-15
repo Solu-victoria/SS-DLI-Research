@@ -2,7 +2,7 @@ from env import StudentEnv
 from agent import Agent
 import numpy as np
 
-def train_model(multi_timescale=False, episodes=200):
+def train_model(multi_timescale=False, episodes=200, save_path=None):
     env = StudentEnv(multi_timescale=multi_timescale)
 
     state_dim = 6 if multi_timescale else 4
@@ -28,12 +28,8 @@ def train_model(multi_timescale=False, episodes=200):
 
         print(f"{'Multi' if multi_timescale else 'Baseline'} | Episode {ep} | Reward: {total_reward:.2f}")
 
+    # Save model
+    if save_path:
+        agent.save(save_path)
+
     return rewards_history
-
-
-if __name__ == "__main__":
-    print("Training Baseline Model...")
-    baseline_rewards = train_model(multi_timescale=False)
-
-    print("\nTraining Multi-Timescale Model...")
-    multi_rewards = train_model(multi_timescale=True)
