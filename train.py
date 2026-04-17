@@ -2,7 +2,7 @@ from env import StudentEnv
 from agent import Agent
 import numpy as np
 
-def train_model(multi_timescale=False, episodes=200, save_path=None):
+def train_model(multi_timescale=False, episodes=200, ep_steps=100, save_path=None):
     env = StudentEnv(multi_timescale=multi_timescale)
 
     state_dim = 4 if multi_timescale else 2
@@ -34,7 +34,7 @@ def train_model(multi_timescale=False, episodes=200, save_path=None):
 
     return rewards_history
 
-def run_train_experiment(num_runs=5, episodes=200):
+def run_train_experiment(num_runs=5, episodes=200, num_steps_per_ep=100):
     all_baseline = []
     all_multi = []
 
@@ -42,20 +42,22 @@ def run_train_experiment(num_runs=5, episodes=200):
         print(f"\nRun {run+1}/{num_runs}")
 
         # Create filenames
-        baseline_path = f"models/v2/baseline/run_{run+1}.pth"
-        multi_path = f"models/v2/multi/run_{run+1}.pth"
+        baseline_path = f"models/v2/{num_steps_per_ep}_steps_per_ep/baseline/run_{run+1}.pth"
+        multi_path = f"models/v2/{num_steps_per_ep}_steps_per_ep/multi/run_{run+1}.pth"
 
         # Train + save
         baseline = train_model(
             multi_timescale=False,
             episodes=episodes,
-            save_path=baseline_path
+            ep_steps = num_steps_per_ep,
+            save_path=baseline_path,
         )
 
         multi = train_model(
             multi_timescale=True,
             episodes=episodes,
-            save_path=multi_path
+            ep_steps = num_steps_per_ep,
+            save_path=multi_path,
         )
 
         all_baseline.append(baseline)
