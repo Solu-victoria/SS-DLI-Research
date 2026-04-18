@@ -14,7 +14,7 @@ def train_model(multi_timescale=False, episodes=200, ep_steps=100, save_path=Non
         state = env.reset()
         total_reward = 0
 
-        for t in range(100):
+        for t in range(ep_steps):
             action = agent.select_action(state)
             next_state, reward, _, _ = env.step(action)
 
